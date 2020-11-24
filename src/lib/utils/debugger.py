@@ -43,6 +43,8 @@ class Debugger(object):
         (255, 0, 0), (0, 0, 255)]
     elif num_classes == 80 or dataset == 'coco':
       self.names = coco_class_name
+    elif num_classes == 8 or dataset == 'cocoCustomAxle':
+      self.names = cocoCustomAxle_class_name
     elif num_classes == 20 or dataset == 'pascal':
       self.names = pascal_class_name
     elif dataset == 'gta':
@@ -62,6 +64,8 @@ class Debugger(object):
       self.focal_length = 721.5377
       self.W = 1242
       self.H = 375
+    elif num_classes == 20 or dataset == 'pascal':
+      self.names = pascal_class_name
     num_classes = len(self.names)
     self.down_ratio=down_ratio
     # for bird view
@@ -215,10 +219,15 @@ class Debugger(object):
   def show_all_imgs(self, pause=False, time=0):
     if not self.ipynb:
       for i, v in self.imgs.items():
-        cv2.imshow('{}'.format(i), v)
+        path = '/home/seungtaek/CenterNet/exp/ctdet/cocoCustomAxle/debug/'
+        cv2.imwrite(path + '{}.png'.format(i), v)
+        '''
+        src = cv2.resize(v, dsize=(1920, 1280), interpolation=cv2.INTER_LINEAR)
+        cv2.imshow('{}'.format(i), src)
       if cv2.waitKey(0 if pause else 1) == 27:
         import sys
         sys.exit(0)
+        '''
     else:
       self.ax = None
       nImgs = len(self.imgs)
@@ -233,7 +242,7 @@ class Debugger(object):
           self.plt.imshow(v)
       self.plt.show()
 
-  def save_img(self, imgId='default', path='./cache/debug/'):
+  def save_img(self, imgId='default', path='/home/seungtaek/CenterNet/exp/ctdet/cocoCustomAxle/debug/'):
     cv2.imwrite(path + '{}.png'.format(imgId), self.imgs[imgId])
     
   def save_all_imgs(self, path='./cache/debug/', prefix='', genID=False):
@@ -455,6 +464,8 @@ coco_class_name = [
      'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
      'scissors', 'teddy bear', 'hair drier', 'toothbrush'
 ]
+
+cocoCustomAxle_class_name =['Axle', 'NormalCar', 'Bus', 'SmallTruckA', 'SmallTurckB', 'MidSizeTruckA', 'MidSizeTruckB', 'MidSizeTruckC']
 
 color_list = np.array(
         [

@@ -24,8 +24,7 @@ class BaseDetector(object):
     self.model = create_model(opt.arch, opt.heads, opt.head_conv)
     self.model = load_model(self.model, opt.load_model)
     self.model = self.model.to(opt.device)
-    self.model.eval()
-
+    self.model.eval()    
     self.mean = np.array(opt.mean, dtype=np.float32).reshape(1, 1, 3)
     self.std = np.array(opt.std, dtype=np.float32).reshape(1, 1, 3)
     self.max_per_image = 100
@@ -77,6 +76,9 @@ class BaseDetector(object):
     raise NotImplementedError
 
   def show_results(self, debugger, image, results):
+   raise NotImplementedError
+  
+  def save_results(self, debugger, image, results):
    raise NotImplementedError
 
   def run(self, image_or_path_or_tensor, meta=None):
@@ -137,7 +139,9 @@ class BaseDetector(object):
     tot_time += end_time - start_time
 
     if self.opt.debug >= 1:
-      self.show_results(debugger, image, results)
+      fileName = image_or_path_or_tensor.split('/')[-1][:-4]
+      self.save_results(debugger, image, results, fileName)
+      #self.show_results(debugger, image, results)
     
     return {'results': results, 'tot': tot_time, 'load': load_time,
             'pre': pre_time, 'net': net_time, 'dec': dec_time,

@@ -12,9 +12,9 @@ class opts(object):
     # basic experiment setting
     self.parser.add_argument('task', default='ctdet',
                              help='ctdet | ddd | multi_pose | exdet')
-    self.parser.add_argument('--dataset', default='coco',
+    self.parser.add_argument('--dataset', default='cocoCustomAxle',
                              help='coco | kitti | coco_hp | pascal')
-    self.parser.add_argument('--exp_id', default='default')
+    self.parser.add_argument('--exp_id', default='cocoCustomAxle')
     self.parser.add_argument('--test', action='store_true')
     self.parser.add_argument('--debug', type=int, default=0,
                              help='level of visualization.'
@@ -82,9 +82,9 @@ class opts(object):
     # train
     self.parser.add_argument('--lr', type=float, default=1.25e-4, 
                              help='learning rate for batch size 32.')
-    self.parser.add_argument('--lr_step', type=str, default='90,120',
+    self.parser.add_argument('--lr_step', type=str, default='400, 500',
                              help='drop learning rate by 10.')
-    self.parser.add_argument('--num_epochs', type=int, default=140,
+    self.parser.add_argument('--num_epochs', type=int, default=500,
                              help='total training epochs.')
     self.parser.add_argument('--batch_size', type=int, default=32,
                              help='batch size')
@@ -335,9 +335,9 @@ class opts(object):
 
   def init(self, args=''):
     default_dataset_info = {
-      'ctdet': {'default_resolution': [512, 512], 'num_classes': 80, 
+      'ctdet': {'default_resolution': [416, 416], 'num_classes': 8, 
                 'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
-                'dataset': 'coco'},
+                'dataset': 'cocoCustomAxle'},
       'exdet': {'default_resolution': [512, 512], 'num_classes': 80, 
                 'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
                 'dataset': 'coco'},
