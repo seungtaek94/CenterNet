@@ -10,7 +10,7 @@ class opts(object):
   def __init__(self):
     self.parser = argparse.ArgumentParser()
     # basic experiment setting
-    self.parser.add_argument('task', default='ctdet',
+    self.parser.add_argument('--task', default='ctdet',
                              help='ctdet | ddd | multi_pose | exdet')
     self.parser.add_argument('--dataset', default='cocoCustomAxle',
                              help='coco | kitti | coco_hp | pascal')
@@ -82,9 +82,9 @@ class opts(object):
     # train
     self.parser.add_argument('--lr', type=float, default=1.25e-4, 
                              help='learning rate for batch size 32.')
-    self.parser.add_argument('--lr_step', type=str, default='190, 230',
+    self.parser.add_argument('--lr_step', type=str, default='150, 180',
                              help='drop learning rate by 10.')
-    self.parser.add_argument('--num_epochs', type=int, default=350,
+    self.parser.add_argument('--num_epochs', type=int, default=200,
                              help='total training epochs.')
     self.parser.add_argument('--batch_size', type=int, default=32,
                              help='batch size')

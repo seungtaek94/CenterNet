@@ -50,7 +50,7 @@ forward = {'dla':pose_dla_forward,'dlav0':dlav0_forward,'resdcn':resnet_dcn_forw
 
 opt = opts().init()  ## change lib/opts.py add_argument('task', default='ctdet'....) to add_argument('--task', default='ctdet'....)
 opt.arch = 'dla_34'
-opt.heads = OrderedDict([('hm', 80), ('reg', 2), ('wh', 2)])
+opt.heads = OrderedDict([('hm', 8), ('reg', 2), ('wh', 2)])
 opt.head_conv = 256 if 'dla' in opt.arch else 64
 print(opt)
 model = create_model(opt.arch, opt.heads, opt.head_conv)
@@ -58,6 +58,6 @@ model.forward = MethodType(forward[opt.arch.split('_')[0]], model)
 load_model(model, '../models/ctdet_coco_dla_2x.pth')
 model.eval()
 model.cuda()
-input = torch.zeros([1, 3, 512, 512]).cuda()
-onnx.export(model, input, "ctdet_coco_dla_2x.onnx", verbose=True,
+input = torch.zeros([1, 3, 416, 416]).cuda()
+onnx.export(model, input, "ctdet_cocoAxle_dla_2x.onnx", verbose=True,
             operator_export_type=OperatorExportTypes.ONNX)
